@@ -1,3 +1,9 @@
+---
+name: create-skill
+description: Guides the user through creating a new skill for this repository. Scaffolds the directory structure, populates skill.md with all mandatory sections, and enforces repo conventions.
+user-invocable: true
+---
+
 # Skill: create-skill
 
 ## Description
@@ -40,9 +46,16 @@ skills/
 
 ### 3. Populate skill.md
 
-Every `skill.md` **must** contain the following sections in this order:
+Every `skill.md` **must** start with a YAML frontmatter block followed by the
+content sections:
 
 ```markdown
+---
+name: <kebab-case-name>
+description: <one-sentence summary used by Claude to auto-discover the skill>
+user-invocable: true
+---
+
 # Skill: <name>
 
 ## Description
@@ -61,9 +74,21 @@ Every `skill.md` **must** contain the following sections in this order:
 <caveats, known limitations, related skills>
 ```
 
+**Frontmatter fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | yes | Becomes the slash command `/name` |
+| `description` | yes | Used by Claude for auto-discovery |
+| `user-invocable` | yes | Set to `true` to show in `/` menu |
+| `allowed-tools` | no | Tools Claude may use without prompting |
+| `argument-hint` | no | Autocomplete hint, e.g. `[issue-number]` |
+
 ### 4. Validate before committing
 
 - [ ] File is located at `skills/<name>/skill.md`
+- [ ] YAML frontmatter is present and valid
+- [ ] `name` matches the directory name
 - [ ] All content is in English
 - [ ] Name is kebab-case
 - [ ] All required sections are present
@@ -91,9 +116,9 @@ skills/
     └── skill.md
 ```
 
-`skill.md` scaffolded with: description, trigger `"summarize this PR"` /
-`/summarize-pr`, step-by-step instructions for fetching PR diff and producing a
-structured summary, and one end-to-end example.
+`skill.md` scaffolded with: YAML frontmatter (`name: summarize-pr`), description,
+trigger `"summarize this PR"` / `/summarize-pr`, step-by-step instructions for
+fetching PR diff and producing a structured summary, and one end-to-end example.
 
 ## Notes
 
@@ -101,3 +126,5 @@ structured summary, and one end-to-end example.
   creating a new one to avoid duplication.
 - If the skill requires external tools or APIs, add a `dependencies` section to
   `skill.md` and consider adding the tool under `tools/`.
+- After creating the skill, run `scripts/install.sh` to make it available to
+  Claude Code immediately.
