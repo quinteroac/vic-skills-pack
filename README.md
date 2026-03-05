@@ -30,48 +30,59 @@ vic-skills-pack/
 
 ## Installation
 
-Skills in this repo are Claude Code slash commands. Installing them makes them
-available as `/skill-name` in any Claude Code session.
-
-### Quick install (recommended)
+Each skill is a single `skill.md` file. The install script symlinks them into
+the right place for each tool — safe to re-run at any time.
 
 ```bash
 git clone <repo-url>
 cd vic-skills-pack
-bash scripts/install.sh
+bash scripts/install.sh          # installs for all detected tools
 ```
 
-The script symlinks every `skills/<name>/skill.md` to
-`~/.claude/skills/<name>/SKILL.md`. Restart Claude Code (or reload the window)
-after running it.
-
-To update after pulling new skills:
+Flags to target a specific tool:
 
 ```bash
-bash scripts/install.sh   # safe to re-run, skips already-linked skills
+bash scripts/install.sh --claude    # Claude Code only
+bash scripts/install.sh --copilot   # GitHub Copilot CLI only
 ```
 
-### Manual install
+### Claude Code
 
-To install a single skill without the script:
-
-```bash
-mkdir -p ~/.claude/skills/<skill-name>
-ln -s "$(pwd)/skills/<skill-name>/skill.md" ~/.claude/skills/<skill-name>/SKILL.md
-```
-
-### Invoking a skill
-
-Once installed, type `/` in Claude Code to see available skills, or invoke
-directly:
+Skills are symlinked to `~/.claude/skills/<name>/SKILL.md` and become available
+as slash commands. Restart Claude Code (or reload the window) after installing.
 
 ```
 /create-skill
 /create-skill add a skill for reviewing pull requests
 ```
 
-Skills can also be triggered automatically when Claude detects your request
-matches a skill's description.
+Type `/` to browse all installed skills. Skills can also trigger automatically
+when Claude detects your request matches a skill's description.
+
+**Manual install (single skill):**
+
+```bash
+mkdir -p ~/.claude/skills/<skill-name>
+ln -s "$(pwd)/skills/<skill-name>/skill.md" ~/.claude/skills/<skill-name>/SKILL.md
+```
+
+### GitHub Copilot CLI
+
+Skills are symlinked to `~/.copilot/agents/<name>.md` and become available as
+user-level agents across all repositories.
+
+Invoke from the Copilot CLI or Copilot Chat:
+
+```
+@create-skill scaffold a skill for reviewing pull requests
+```
+
+**Manual install (single skill):**
+
+```bash
+mkdir -p ~/.copilot/agents
+ln -s "$(pwd)/skills/<skill-name>/skill.md" ~/.copilot/agents/<skill-name>.md
+```
 
 ## Setup (git hooks)
 
