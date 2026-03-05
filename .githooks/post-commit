@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Auto-updates README.md after every commit if skills/ changed.
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+# Only run when skills/ was touched
+if git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -q "^skills/"; then
+  bash "$REPO_ROOT/scripts/update-readme.sh"
+  git add "$REPO_ROOT/README.md"
+  git commit --no-verify -m "chore: update README skills table [auto]"
+fi
