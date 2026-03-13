@@ -1,6 +1,6 @@
 ---
 name: project-selection
-description: Helps developers choose their next programming project through a guided interview covering motivation, niche, pain points, and format, then researches the web to propose 4 concrete ideas with competitive analysis, differentiation factors, and effort estimates.
+description: Helps developers choose their next programming project through a guided interview covering motivation, niche, pain points, and format, then researches the web to surface existing ready-to-use solutions and propose 4 concrete ideas with competitive analysis, differentiation factors, and effort estimates.
 user-invocable: true
 allowed-tools: WebSearch
 ---
@@ -125,25 +125,76 @@ If they are unsure, offer a recommendation based on their previous answers.
 
 ---
 
-### 3. Research and generate project proposals
+### 3. Research — existing solutions + demand signals
 
-Once all four dimensions are captured, **search the web** to validate demand
-and competitive context before generating proposals.
+Once all four dimensions are captured, **search the web** across two angles:
 
-**Search queries to run (adapt to the user's context):**
+#### 3a. Existing ready-to-use solutions
+
+Run searches specifically to find tools or projects the user could adopt
+**right now**, without building anything:
+
+1. `"[pain point]" open source GitHub OR "self-hosted"`
+2. `"[niche] [problem]" site:github.com stars OR fork`
+3. `"[pain point] free tool" OR "free app" OR "free alternative"`
+4. `"[problem]" site:alternativeto.net OR site:producthunt.com`
+
+For each result that looks genuinely useful, note:
+- Whether it is actively maintained (last commit / last update).
+- Whether it requires technical setup or is ready out of the box.
+- License (open-source, freemium, paid).
+
+#### 3b. Demand and competitive context
 
 1. `"[niche] [pain point] tool" OR "app" site:reddit.com OR news.ycombinator.com`
 2. `"[pain point] software" alternatives OR "best tools"`
 3. `"[niche] [problem]" pain point OR frustration`
 4. `"[format] [problem] open source" OR "indie hacker"`
 
-Use search results to understand:
+Use these results to understand:
 
 - Existing tools and their weaknesses (pricing, missing features, UX gaps).
 - Whether the need is real (threads, upvotes, reviews asking for something
   better).
 - Market activity signals (ProductHunt launches, GitHub stars, SaaS review
   sites).
+
+---
+
+### 3.5. Present existing solutions (before proposing new ideas)
+
+**Before listing the 4 build proposals**, present a "You might not need to
+build this" section. This is especially important when the user's motivation
+is **personal use**, but include it regardless — discovering a ready-made
+solution is always valuable.
+
+Format:
+
+```
+## Already exists — worth checking before building
+
+• <Project / Tool name> — <one-line description>
+  → <URL>  |  <license or pricing>  |  <maintenance status: active / archived / unknown>
+  Why it might work for you: <1 sentence connecting it to their stated need>
+
+• [repeat for each relevant result, up to ~4 entries]
+
+[If nothing relevant was found:]
+No ready-to-use solution found that fits your specific need — building makes sense.
+```
+
+**Tone rules for this section:**
+
+- Be honest: if something already does 80% of what the user wants, say so.
+- If motivation is **personal use**, explicitly add: *"Since this is for
+  personal use, you might want to try [tool] before building your own."*
+- If motivation is **monetization or portfolio**, frame existing tools as
+  competition context, not blockers: *"These exist but leave these gaps open."*
+- If motivation is **learning**, note that existing solutions don't change the
+  learning value: *"Even if [tool] exists, building your own version is still
+  a great way to learn [tech]."*
+- Never skip this section even if you found nothing — always close it with a
+  clear statement about what was or wasn't found.
 
 ---
 
@@ -454,9 +505,14 @@ have fundamentally changed.
 
 ## Notes
 
-- The web search step (step 3) is essential — do not skip it. Proposals
+- The research step (step 3) is essential — do not skip it. Proposals
   without real competitive data are generic and unhelpful.
-- Run at least 2 search queries before generating proposals. More is better.
+- Run at least 2 searches for existing solutions (step 3a) AND at least 2
+  searches for demand context (step 3b) before generating proposals.
+- The "Already exists" section (step 3.5) is **mandatory** — always present it,
+  even if the result is "nothing found". Never silently skip it.
+- If the user's motivation is personal use and a solid existing solution is
+  found, proactively recommend it before diving into the 4 proposals.
 - Exactly 4 proposals per response — not 3, not 5.
 - The deep-dive (step 5) triggers only when the user selects a specific
   proposal. Do not expand all proposals proactively.
