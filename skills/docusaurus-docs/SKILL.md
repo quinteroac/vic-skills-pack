@@ -61,6 +61,40 @@ export default {
 ```
 > Also add `slug: /` frontmatter to the doc you want as the homepage, and delete `src/pages/index.js` to avoid route conflicts.
 
+**Monorepo setup** — place the Docusaurus site in a subfolder of your existing repo:
+```
+my-monorepo/
+├── packages/
+│   └── my-lib/
+├── website/          ← Docusaurus lives here
+│   ├── docs/
+│   └── docusaurus.config.js
+└── package.json
+```
+
+Run the scaffolder from inside the monorepo root:
+```bash
+npx create-docusaurus@latest website classic
+```
+
+In `website/package.json`, reference local packages directly:
+```json
+{
+  "dependencies": {
+    "my-lib": "*"
+  }
+}
+```
+
+With npm/yarn workspaces in the root `package.json`:
+```json
+{
+  "workspaces": ["packages/*", "website"]
+}
+```
+
+> If deploying to Netlify or Vercel, set the **Base directory** to `website/` (or wherever your Docusaurus root is) so the build triggers correctly.
+
 ## What it gives you
 
 - **Docs** — versioned documentation with MDX, sidebar, prev/next navigation
