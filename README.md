@@ -10,12 +10,11 @@ vic-skills-pack/
 ├── README.md           # This file
 ├── skills/             # One directory per skill
 │   └── <skill-name>/
-│       ├── skill.md   # Skill definition (trigger, instructions, examples)
-│       └── assets/    # Optional supporting files
-├── tools/              # Reusable tools or MCP integrations
-├── scripts/            # Maintenance scripts
-│   └── update-readme.sh
-└── docs/               # Cross-cutting documentation
+│       ├── SKILL.md    # Skill definition (frontmatter + instructions)
+│       ├── scripts/    # Optional — executable helpers
+│       ├── references/ # Optional — reference docs loaded on demand
+│       └── assets/     # Optional — templates, icons, fonts
+└── scripts/            # Maintenance scripts
 ```
 
 <!-- skills-start -->
@@ -24,17 +23,56 @@ vic-skills-pack/
 
 | Skill | Description |
 |-------|-------------|
-| [`create-skill`](skills/create-skill/skill.md) | Guides the user through creating a new skill for this repository. |
+| [`create-skill`](skills/create-skill/SKILL.md) | Scaffold and create a new skill for this repository. |
 
 <!-- skills-end -->
 
 ## Installation
 
-Each skill is a single `skill.md` file. The install script symlinks them into
-the right place for each tool — safe to re-run at any time.
+### Recommended — `npx skills`
+
+Install directly from this repository using the [`skills`](https://github.com/vercel-labs/skills) CLI.
+No cloning required; the command points to this repo on GitHub:
 
 ```bash
-git clone <repo-url>
+npx skills add quinteroac/vic-skills-pack
+```
+
+Install globally (available across all projects):
+
+```bash
+npx skills add quinteroac/vic-skills-pack -g
+```
+
+Install only for Claude Code:
+
+```bash
+npx skills add quinteroac/vic-skills-pack --agent claude-code
+```
+
+Install a single skill by name:
+
+```bash
+npx skills add quinteroac/vic-skills-pack --skill market-scout
+```
+
+After installing, restart Claude Code (or reload the window) to pick up the
+new skills. Type `/` to browse them or invoke them by name:
+
+```
+/market-scout
+/project-selection
+/create-skill add a skill for reviewing pull requests
+```
+
+---
+
+### Alternative — `scripts/install.sh`
+
+Clone the repo and run the install script to symlink skills locally:
+
+```bash
+git clone https://github.com/quinteroac/vic-skills-pack
 cd vic-skills-pack
 bash scripts/install.sh          # installs for all detected tools
 ```
@@ -46,53 +84,19 @@ bash scripts/install.sh --claude    # Claude Code only
 bash scripts/install.sh --copilot   # GitHub Copilot CLI only
 ```
 
-### Claude Code
+Skills are symlinked to `~/.claude/skills/<name>/SKILL.md`. To update,
+`git pull` and re-run the script.
 
-Skills are symlinked to `~/.claude/skills/<name>/SKILL.md` and become available
-as slash commands. Restart Claude Code (or reload the window) after installing.
-
-```
-/create-skill
-/create-skill add a skill for reviewing pull requests
-```
-
-Type `/` to browse all installed skills. Skills can also trigger automatically
-when Claude detects your request matches a skill's description.
-
-**Manual install (single skill):**
-
-```bash
-mkdir -p ~/.claude/skills/<skill-name>
-ln -s "$(pwd)/skills/<skill-name>/skill.md" ~/.claude/skills/<skill-name>/SKILL.md
-```
-
-### GitHub Copilot CLI
-
-Skills are symlinked to `~/.copilot/agents/<name>.md` and become available as
-user-level agents across all repositories.
-
-Invoke from the Copilot CLI or Copilot Chat:
-
-```
-@create-skill scaffold a skill for reviewing pull requests
-```
-
-**Manual install (single skill):**
-
-```bash
-mkdir -p ~/.copilot/agents
-ln -s "$(pwd)/skills/<skill-name>/skill.md" ~/.copilot/agents/<skill-name>.md
-```
+---
 
 ## Setup (git hooks)
 
-Clone the repo and enable the git hooks so the Skills table above stays in sync:
+Enable the git hooks so the Skills table above stays in sync after each
+commit:
 
 ```bash
-git clone <repo-url>
-cd vic-skills-pack
 git config core.hooksPath .githooks
 ```
 
 The `post-commit` hook automatically regenerates the Skills table whenever a
-file inside `skills/` is changed.
+file inside `skills/` changes.
