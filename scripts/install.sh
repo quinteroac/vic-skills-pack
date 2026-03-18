@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Installs skills from this repo into Claude Code and/or GitHub Copilot CLI.
 #
-# Claude Code : skills/<name>/skill.md → ~/.claude/skills/<name>/SKILL.md
-# Copilot CLI : skills/<name>/skill.md → ~/.copilot/agents/<name>.md
+# Claude Code : skills/<name>/SKILL.md → ~/.claude/skills/<name>/SKILL.md
+# Copilot CLI : skills/<name>/SKILL.md → ~/.copilot/agents/<name>.md
 #
 # Usage:
 #   bash scripts/install.sh               # install for all detected tools
@@ -45,10 +45,10 @@ copilot_installed=0; copilot_skipped=0
 for skill_dir in "$SKILLS_DIR"/*/; do
   [ -d "$skill_dir" ] || continue
   skill_name="$(basename "$skill_dir")"
-  src="$skill_dir/skill.md"
+  src="$skill_dir/SKILL.md"
 
   if [ ! -f "$src" ]; then
-    echo "  skip    $skill_name (no skill.md found)"
+    echo "  skip    $skill_name (no SKILL.md found)"
     continue
   fi
 
