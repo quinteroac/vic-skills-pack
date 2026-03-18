@@ -45,6 +45,22 @@ export default {
 };
 ```
 
+**Docs-only mode** — serve docs at the site root (`/`) instead of `/docs`:
+```js
+export default {
+  presets: [
+    ['classic', {
+      docs: {
+        routeBasePath: '/', // docs served at https://example.com/some-doc
+        sidebarPath: './sidebars.js',
+      },
+      blog: false, // disable blog (optional)
+    }],
+  ],
+};
+```
+> Also add `slug: /` frontmatter to the doc you want as the homepage, and delete `src/pages/index.js` to avoid route conflicts.
+
 ## What it gives you
 
 - **Docs** — versioned documentation with MDX, sidebar, prev/next navigation
