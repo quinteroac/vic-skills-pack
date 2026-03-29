@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 # Installs skills from this repo into Claude Code and/or GitHub Copilot CLI.
 #
-# Claude Code : skills/<name>/SKILL.md → ~/.claude/skills/<name>/SKILL.md
-# Copilot CLI : skills/<name>/SKILL.md → ~/.copilot/agents/<name>.md
+# Skills are discovered recursively under skills/ at depth 2 or 3:
+#   skills/<name>/SKILL.md                   (flat)
+#   skills/<category>/<name>/SKILL.md        (categorized)
+#
+# Claude Code : SKILL.md → ~/.claude/skills/<name>/SKILL.md
+# Copilot CLI : SKILL.md → ~/.copilot/agents/<name>.md
 #
 # Usage:
 #   bash scripts/install.sh               # install for all detected tools
@@ -42,15 +46,8 @@ link_skill() {
 claude_installed=0; claude_skipped=0
 copilot_installed=0; copilot_skipped=0
 
-for skill_dir in "$SKILLS_DIR"/*/; do
-  [ -d "$skill_dir" ] || continue
-  skill_name="$(basename "$skill_dir")"
-  src="$skill_dir/SKILL.md"
-
-  if [ ! -f "$src" ]; then
-    echo "  skip    $skill_name (no SKILL.md found)"
-    continue
-  fi
+while IFS= read -r src; do
+  skill_name="$(basename "$(dirname "$src")")"
 
   if $do_claude; then
     if link_skill "$src" "${HOME}/.claude/skills/${skill_name}/SKILL.md" "claude"; then
@@ -67,7 +64,7 @@ for skill_dir in "$SKILLS_DIR"/*/; do
       ((copilot_skipped++)) || true
     fi
   fi
-done
+done < <(find "$SKILLS_DIR" -name "SKILL.md" -mindepth 2 -maxdepth 3 | sort)
 
 # ── summary ───────────────────────────────────────────────────────────────────
 echo ""

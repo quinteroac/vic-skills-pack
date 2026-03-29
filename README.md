@@ -6,24 +6,32 @@ A curated set of personal Claude Code skills.
 
 ```
 vic-skills-pack/
-├── AGENTS.md           # Repo conventions and agent guidelines
-├── README.md           # This file
-├── skills/             # One directory per skill
-│   └── <skill-name>/
-│       ├── SKILL.md    # Skill definition (frontmatter + instructions)
-│       ├── scripts/    # Optional — executable helpers
-│       ├── references/ # Optional — reference docs loaded on demand
-│       └── assets/     # Optional — templates, icons, fonts
-└── scripts/            # Maintenance scripts
+├── AGENTS.md               # Repo conventions and agent guidelines
+├── README.md               # This file
+├── skills/                 # Skills organized by category
+│   └── <category>/         # e.g. ui/, business/, meta/
+│       └── <skill-name>/
+│           ├── SKILL.md    # Skill definition (frontmatter + instructions)
+│           ├── scripts/    # Optional — executable helpers
+│           ├── references/ # Optional — reference docs loaded on demand
+│           └── assets/     # Optional — templates, icons, fonts
+└── scripts/                # Maintenance scripts
 ```
 
 <!-- skills-start -->
 
 ## Skills
 
-| Skill | Description |
-|-------|-------------|
-| [`create-skill`](skills/create-skill/SKILL.md) | Scaffold and create a new skill for this repository. |
+| Skill | Category | Description |
+|-------|----------|-------------|
+| [`market-scout`](skills/business/market-scout/SKILL.md) | `business` | Helps entrepreneurs discover viable markets quickly through a guided profiling interview, then recommends 3–5 tailored market opportunities in a lean, actionable format. |
+| [`project-selection`](skills/business/project-selection/SKILL.md) | `business` | Helps developers choose their next programming project through a guided interview covering motivation, niche, pain points, and format, then researches the web to surface existing ready-to-use solutions and propose 4 concrete ideas with competitive analysis, differentiation factors, and effort estimates. |
+| [`create-skill`](skills/meta/create-skill/SKILL.md) | `meta` | Scaffold and create a new skill for this repository. |
+| [`docs-to-skill`](skills/meta/docs-to-skill/SKILL.md) | `meta` | Creates an agent skill from the official documentation of any tool, library, or API. |
+| [`docusaurus-docs`](skills/ui/docusaurus-docs/SKILL.md) | `ui` | Skill for building documentation websites with Docusaurus — helps agents scaffold sites, configure plugins/themes, write content in MDX, and deploy to platforms like Vercel, Netlify, or GitHub Pages. |
+| [`pretext-art`](skills/ui/pretext-art/SKILL.md) | `ui` | Generates creative and artistic text layout code using @chenglou/pretext — for kinetic typography, text-along-a-path, generative type art, text masking, shaped text containers, wavy/curved text, typographic posters, and custom Canvas/SVG text rendering. |
+| [`pretext-docs`](skills/ui/pretext-docs/SKILL.md) | `ui` | API reference for @chenglou/pretext — a pure JS/TS library for measuring and laying out multiline text without DOM reflows. |
+| [`pretext-integrate`](skills/ui/pretext-integrate/SKILL.md) | `ui` | Guides implementation of @chenglou/pretext in a real project — asks a few targeted questions about rendering target, data shape, and performance context, then generates correct, complete integration code. |
 
 <!-- skills-end -->
 

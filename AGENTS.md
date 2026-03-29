@@ -9,16 +9,28 @@ vic-skills-pack/
 ├── AGENTS.md               # This file — agents overview and repo conventions
 ├── README.md               # General repo description
 │
-├── skills/                 # One subdirectory per skill
-│   ├── <skill-name>/
-│   │   ├── SKILL.md        # Required — skill definition (frontmatter + instructions)
-│   │   ├── scripts/        # Optional — executable helpers for deterministic tasks
-│   │   ├── references/     # Optional — reference docs loaded into context on demand
-│   │   └── assets/         # Optional — templates, icons, fonts used in output
-│   └── ...
+├── skills/                 # Skills organized by category
+│   └── <category>/         # e.g. ui/, business/, meta/
+│       └── <skill-name>/
+│           ├── SKILL.md    # Required — skill definition (frontmatter + instructions)
+│           ├── scripts/    # Optional — executable helpers for deterministic tasks
+│           ├── references/ # Optional — reference docs loaded into context on demand
+│           └── assets/     # Optional — templates, icons, fonts used in output
 │
 └── scripts/                # Repo-level utilities (install, update-readme, etc.)
 ```
+
+### Category conventions
+
+Skills live under a category folder inside `skills/`. Use short, lowercase, kebab-case category names. Current categories:
+
+| Category   | Purpose |
+|------------|---------|
+| `ui/`      | Frontend, rendering, design systems, and visual tooling |
+| `business/`| Market research, project planning, and strategy |
+| `meta/`    | Skills that help create or manage other skills |
+
+Add a new category only when no existing one fits. Avoid over-splitting (one skill per category is a smell).
 
 ### Directory rationale
 
